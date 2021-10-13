@@ -1,0 +1,15 @@
+.table__container i {
+  font-size: 14px;
+}
+.table__container button {
+  font-size: 15px;
+}
+.table__container thead {
+  background: #007bff;
+  color: #fff;
+}
+.table__container thead tr th:last-child,
+.table__container tbody tr td:last-child {
+  width: 15%;
+  text-align: center;
+}
