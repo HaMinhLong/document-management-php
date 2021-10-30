@@ -26,6 +26,9 @@ class UserGroupController
       case "delete":
         $this->delete();
         break;
+      case "page":
+        $this->page();
+        break;
       default:
         $this->list();
     }
@@ -163,8 +166,9 @@ class UserGroupController
           $this->pageRedirect("user-group/update");
         }
       } elseif (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
+        unset($_SESSION["userGroup"]);
         $id = $_GET["id"];
-        $result = $this->userGroup->selectRecord($id);
+        $result = $this->userGroup->getRecord($id);
         $row = mysqli_fetch_array($result);
         $userGroup = new UserGroup();
         $userGroup->id = $row["id"];
@@ -205,9 +209,19 @@ class UserGroupController
     }
   }
   // get list
+  public function page()
+  {
+    $filters = new UserGroup();
+    $filters->userGroupName = trim($_GET["userGroupName"]);
+    $filters->status = trim($_GET["status"]);
+    if (isset($_GET["userGroupName"]) || isset($_GET["status"])) {
+      $this->userGroup->selectRecord($filters);
+    } else {
+      $this->userGroup->selectRecord(0);
+    }
+  }
   public function list()
   {
-    $result = $this->userGroup->selectRecord(0);
     include "views/userGroup/list.php";
   }
 }

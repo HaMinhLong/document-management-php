@@ -25,58 +25,43 @@ include "includes/navigation.php";
     <section class="content table__container">
         <div class="container-fluid">
             <div class="row">
-
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-
-                            <table id="example2" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Nhóm tài khoản</th>
-                                        <th>Mô tả</th>
-                                        <th>Trạng thái</th>
-                                        <th>Hành động</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php if ($result->num_rows > 0) {
-                                      while (
-                                        $row = mysqli_fetch_array($result)
-                                      ) {
-                                        echo "<tr>";
-                                        echo "<td>" .
-                                          $row["userGroupName"] .
-                                          "</td>";
-                                        echo "<td>" .
-                                          $row["description"] .
-                                          "</td>";
-                                        echo $row["status"] == "1"
-                                          ? "<td>Kích hoạt</td>"
-                                          : "<td>Ẩn</td>";
-                                        echo "<td>";
-                                        echo "<a href='user-group?act=update&id=" .
-                                          $row["id"] .
-                                          "' data-toggle='tooltip' title='Sửa bản ghi'>
-                                                    <button type='button' class='btn btn-outline-primary btn-sm'>Sửa&nbsp;&nbsp;
-                                                        <i class='fa fa-edit'></i>
-                                                    </button>
-                                                </a>&nbsp;&nbsp;";
-                                        echo "<a href='#' data-toggle='modal' data-target='#modal-danger' onclick='setDeleteRecordId(" .
-                                          $row["id"] .
-                                          ")' data-toggle='tooltip' title='Xóa bản ghi'>
-                                                    <button type='button' class='btn btn-outline-danger btn-sm'>Xóa&nbsp;&nbsp;
-                                                        <i class='fa fa-trash'></i>
-                                                    </button>
-                                                </a>";
-                                        echo "</td>";
-                                        echo "</tr>";
-                                      }
-                                    } else {
-                                      echo "<p class='lead'><em>No records were found.</em></p>";
-                                    } ?>
-                                </tbody>
-                            </table>
+                            <form action="user-group" method='get' onsubmit='return false;'>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <!-- <input type="text" name='act' value='search' hidden> -->
+                                        <div class="input-group input-group-sm col-12 col-md-6 col-lg-4">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="">Tên nhóm tài khoản</span>
+                                            </div>
+                                            <input type="text" name='userGroupName' id='ug-user-group-name'
+                                                placeholder='Nhập tên nhóm tài khoản' class="form-control"
+                                                value="<?php echo $filters->userGroupName; ?>">
+                                        </div>
+                                        <div class="input-group input-group-sm col-12 col-md-6 col-lg-4">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="">Trạng thái</span>
+                                            </div>
+                                            <select name="status" id='ug-status' class="form-control">
+                                                <?php echo $filters->status ===
+                                                "0"
+                                                  ? "<option value='1'>Kích hoạt</option>
+                                            <option value='0' selected>Ẩn</option>"
+                                                  : "<option value='1' selected>Kích hoạt</option>
+                                            <option value='0'>Ẩn</option>"; ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-end">
+                                            <button class='btn btn-primary btn-sm' id='ug-search'><i
+                                                    class="fas fa-search"></i>&nbsp;&nbsp;Tìm
+                                                kiếm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="user-group-table" style='margin-top: 10px;padding: 0px 5px'></div>
                         </div>
                     </div>
                 </div>
@@ -112,23 +97,62 @@ include "includes/navigation.php";
 include "includes/footer.php";
 include "includes/scripts.php";
 ?>
-
-<script>
-function setDeleteRecordId(id) {
-    document.getElementById("delete-link").href = `user-group?act=delete&id=${id}`;
-
-};
-</script>
 <script>
 $(function() {
     $('#example2').DataTable({
-        "paging": true,
+        "paging": false,
         "lengthChange": false,
-        "searching": true,
+        "searching": false,
         "ordering": true,
         "info": true,
         "autoWidth": false,
         "responsive": true,
+    });
+
+});
+
+function setDeleteRecordId(id) {
+    document.getElementById("delete-link").href = `user-group?act=delete&id=${id}`;
+};
+
+$(document).ready(function() {
+    let userGroupName = '';
+    let status = '';
+
+    load_data();
+
+    function load_data(page) {
+        $.ajax({
+            url: "user-group?act=page",
+            method: "GET",
+            data: {
+                page: page,
+                userGroupName: userGroupName,
+                status: status
+            },
+            success: data => {
+                $('#user-group-table').html(data);
+            }
+        })
+    }
+    $(document).on('click', '.pagination_link', function() {
+        var page = $(this).attr("id");
+        load_data(page);
+    });
+
+    function changeUserGroupName() {
+        var name = document.getElementById("ug-user-group-name").value;
+        userGroupName = name;
+    }
+
+    function changeStatus() {
+        var statusSearch = document.getElementById("ug-status").value;
+        status = statusSearch;
+    }
+    $(document).on('input', '#ug-user-group-name', changeUserGroupName);
+    $(document).on('input', '#ug-status', changeStatus);
+    $("#ug-search").click(function() {
+        load_data();
     });
 
 });
