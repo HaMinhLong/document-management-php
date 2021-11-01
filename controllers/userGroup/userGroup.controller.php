@@ -29,6 +29,9 @@ class UserGroupController
       case "page":
         $this->page();
         break;
+      case "select":
+        $this->select();
+        break;
       default:
         $this->list();
     }
@@ -219,6 +222,10 @@ class UserGroupController
     } else {
       $this->userGroup->selectRecord(0);
     }
+  }
+  public function select()
+  {
+    $this->userGroup->select();
   }
   public function list()
   {

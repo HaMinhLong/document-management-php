@@ -124,6 +124,31 @@ class UserGroupModel
       throw $e;
     }
   }
+  public function select()
+  {
+    $this->open_db();
+    $output = "";
+    $query = $this->conn->prepare("SELECT * FROM userGroup WHERE status = '1'");
+    $query->execute();
+    $result = $query->get_result();
+    if ($result->num_rows > 0) {
+      $output .= "<option value=''>Chọn nhóm tài khoản
+        </option>
+                                            ";
+      while ($row = mysqli_fetch_array($result)) {
+        $output .=
+          "<option value=" .
+          $row["id"] .
+          ">" .
+          $row["userGroupName"] .
+          "</option>
+                                            ";
+      }
+    }
+    $query->close();
+    $this->close_db();
+    echo $output;
+  }
   public function getRecord($obj)
   {
     try {
