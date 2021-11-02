@@ -9,14 +9,14 @@ include "includes/navigation.php";
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Bộ môn</h1>
+                    <h1 class="m-0">Ngành học</h1>
                     <ol class="breadcrumb float-sm-left">
                         <li class="breadcrumb-item"><a href="/final-php">Home</a></li>
-                        <li class="breadcrumb-item active">Bộ môn</li>
+                        <li class="breadcrumb-item active">Ngành học</li>
                     </ol>
                 </div><!-- /.col -->
                 <div class='d-flex align-items-center justify-content-end col-sm-6' style='margin-bottom: 10px'>
-                    <a href="section/insert" data-toggle='tooltip' title='Thêm mới'><button type='button'
+                    <a href="majors/insert" data-toggle='tooltip' title='Thêm mới'><button type='button'
                             class='btn btn-primary'><i class="fas fa-plus"></i>&nbsp;&nbsp;Thêm
                             mới</button></a>
                 </div>
@@ -30,29 +30,29 @@ include "includes/navigation.php";
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="section" method='get' onsubmit='return false;'>
+                            <form action="majors" method='get' onsubmit='return false;'>
                                 <div class="container-fluid">
                                     <div class="row">
                                         <!-- <input type="text" name='act' value='search' hidden> -->
                                         <div class="input-group input-group-sm col-12 col-md-6 col-lg-4">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text" id="">Tên bộ môn</span>
+                                                <span class="input-group-text" id="">Tên ngành học</span>
                                             </div>
-                                            <input type="text" name='sectionName' id='sec_section-name'
-                                                placeholder='Nhập tên bộ môn' class="form-control"
-                                                value="<?php echo $filters->sectionName; ?>">
+                                            <input type="text" name='majorsName' id='ma_majors-name'
+                                                placeholder='Nhập tên ngành học' class="form-control"
+                                                value="<?php echo $filters->majorsName; ?>">
                                         </div>
                                         <div class="input-group input-group-sm col-12 col-md-6 col-lg-4">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text" id="">Khoa</span>
+                                                <span class="input-group-text" id="">Bộ môn</span>
                                             </div>
-                                            <select name="department" id="sec_department" class="form-control"></select>
+                                            <select name="sectionId" id="ma_section" class="form-control"></select>
                                         </div>
                                         <div class="input-group input-group-sm col-12 col-md-6 col-lg-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="">Trạng thái</span>
                                             </div>
-                                            <select name="status" id='sec_status' class="form-control">
+                                            <select name="status" id='ma_status' class="form-control">
                                                 <?php echo $filters->status ===
                                                 "0"
                                                   ? "<option value='1'>Kích hoạt</option>
@@ -62,14 +62,14 @@ include "includes/navigation.php";
                                             </select>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-1 d-flex justify-content-end">
-                                            <button class='btn btn-primary btn-sm' id='sec_search'><i
+                                            <button class='btn btn-primary btn-sm' id='ma_search'><i
                                                     class="fas fa-search"></i>&nbsp;&nbsp;Tìm
                                                 kiếm</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
-                            <div id="section-table" style='margin-top: 10px;padding: 0px 5px'></div>
+                            <div id="majors-table" style='margin-top: 10px;padding: 0px 5px'></div>
                         </div>
                     </div>
                 </div>
@@ -93,7 +93,7 @@ include "includes/navigation.php";
             </div>
             <div class="modal-footer justify-content-start">
                 <button type="button" class="btn btn-outline-light" data-dismiss="modal">Hủy</button>
-                <a href="#" id='sec_delete-link'>
+                <a href="#" id='ma_delete-link'>
                     <button type="button" class="btn btn-outline-light">Xóa</button>
                 </a>
             </div>
@@ -120,39 +120,39 @@ $(function() {
 });
 
 function setDeleteRecordId(id) {
-    document.getElementById("sec_delete-link").href = `section?act=delete&id=${id}`;
+    document.getElementById("ma_delete-link").href = `majors?act=delete&id=${id}`;
 };
 $(document).ready(function() {
-    let sectionName = '';
-    let departmentId = '';
+    let majorsName = '';
+    let sectionId = '';
     let status = '';
 
     load_data();
-    load_department_select();
+    load_section_select();
 
     function load_data(page) {
         $.ajax({
-            url: "section?act=page",
+            url: "majors?act=page",
             method: "GET",
             data: {
                 page: page,
-                sectionName: sectionName,
-                departmentId: departmentId,
+                majorsName: majorsName,
+                sectionId: sectionId,
                 status: status
             },
             success: data => {
-                $('#section-table').html(data);
+                $('#majors-table').html(data);
             }
         })
     }
 
-    function load_department_select() {
+    function load_section_select() {
         $.ajax({
-            url: "department?act=select",
+            url: "section?act=select",
             method: "GET",
             data: {},
             success: data => {
-                $('#sec_department').html(data);
+                $('#ma_section').html(data);
             }
         })
     }
@@ -162,24 +162,24 @@ $(document).ready(function() {
         load_data(page);
     });
 
-    function changeSectionName() {
-        var name = document.getElementById("sec_section-name").value;
-        sectionName = name;
+    function changeMajorsName() {
+        var name = document.getElementById("ma_section-name").value;
+        majorsName = name;
     }
 
     function changeStatus() {
-        var statusSearch = document.getElementById("sec_status").value;
+        var statusSearch = document.getElementById("ma_status").value;
         status = statusSearch;
     }
 
-    function changeDepartmentId() {
-        var departmentSearch = document.getElementById("sec_department").value;
-        departmentId = departmentSearch;
+    function changeSectionId() {
+        var parentSearch = document.getElementById("ma_section").value;
+        sectionId = parentSearch;
     }
-    $(document).on('input', '#sec_section-name', changeSectionName);
-    $(document).on('input', '#sec_status', changeStatus);
-    $(document).on('input', '#sec_department', changeDepartmentId);
-    $("#sec_search").click(function() {
+    $(document).on('input', '#ma_section-name', changeMajorsName);
+    $(document).on('input', '#ma_status', changeStatus);
+    $(document).on('input', '#ma_section', changeSectionId);
+    $("#ma_search").click(function() {
         load_data();
     });
 

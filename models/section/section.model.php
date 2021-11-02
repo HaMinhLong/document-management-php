@@ -97,7 +97,7 @@ class SectionModel
       $page_query = "";
       if ($obj) {
         $page_query = $this->conn->prepare(
-          "SELECT * FROM section WHERE sectionName LIKE '%$obj->sectionName%' AND status LIKE '%$obj->status%' ORDER BY sectionName DESC"
+          "SELECT * FROM section WHERE sectionName LIKE '%$obj->sectionName%' AND departmentId LIKE '%$obj->departmentId%' AND status LIKE '%$obj->status%' ORDER BY sectionName DESC"
         );
       } else {
         $page_query = $this->conn->prepare(
@@ -128,7 +128,28 @@ class SectionModel
   }
   public function select()
   {
-    echo "select";
+    $this->open_db();
+    $output = "";
+    $query = $this->conn->prepare("SELECT * FROM section WHERE status = '1'");
+    $query->execute();
+    $result = $query->get_result();
+    if ($result->num_rows > 0) {
+      $output .= "<option value=''>Chọn bộ môn
+        </option>
+                                            ";
+      while ($row = mysqli_fetch_array($result)) {
+        $output .=
+          "<option value=" .
+          $row["id"] .
+          ">" .
+          $row["sectionName"] .
+          "</option>
+                                            ";
+      }
+    }
+    $query->close();
+    $this->close_db();
+    echo $output;
   }
   public function getRecord($obj)
   {
