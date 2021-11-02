@@ -93,7 +93,7 @@ include "includes/navigation.php";
             </div>
             <div class="modal-footer justify-content-start">
                 <button type="button" class="btn btn-outline-light" data-dismiss="modal">Hủy</button>
-                <a href="#" id='delete-link'>
+                <a href="#" id='u_delete-link'>
                     <button type="button" class="btn btn-outline-light">Xóa</button>
                 </a>
             </div>
@@ -120,7 +120,7 @@ $(function() {
 });
 
 function setDeleteRecordId(id) {
-    document.getElementById("delete-link").href = `user?act=delete&id=${id}`;
+    document.getElementById("u_delete-link").href = `user?act=delete&id=${id}`;
 };
 $(document).ready(function() {
     let username = '';

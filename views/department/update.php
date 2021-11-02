@@ -56,7 +56,7 @@ $department = isset($_SESSION["department"])
                                         <div class="form-group">
                                             <label for='departmentCode'>Mã khoa</label>
                                             <input type="text" name="departmentCode" id='departmentCode'
-                                                placeholder="Nhập mã khoa" class="<?php echo $department->nameMsg ||
+                                                placeholder="Nhập mã khoa" class="<?php echo $department->codeMsg ||
                                                 $department->nameExits
                                                   ? "form-control is-invalid"
                                                   : "form-control"; ?>"

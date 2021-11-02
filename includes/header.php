@@ -35,7 +35,6 @@
         integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="/final-php/plugins/simple-bootstrap-paginator.js"></script>
     <link rel="stylesheet" href="/final-php/static/cms/css/tableStyles.css">
     <link rel="stylesheet" href="/final-php/static/cms/css/formStyles.css">
 </head>
