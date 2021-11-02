@@ -39,10 +39,10 @@ post("/final-php/subject", "views/subject/index.php");
 get("/final-php/subject/insert", "views/subject/insert.php");
 get("/final-php/subject/update", "views/subject/update.php");
 
-get("/final-php/subject-type", "views/subjectType/index.php");
-post("/final-php/subject-type", "views/subjectType/index.php");
-get("/final-php/subject-type/insert", "views/subjectType/insert.php");
-get("/final-php/subject-type/update", "views/subjectType/update.php");
+get("/final-php/subjectType", "views/subjectType/index.php");
+post("/final-php/subjectType", "views/subjectType/index.php");
+get("/final-php/subjectType/insert", "views/subjectType/insert.php");
+get("/final-php/subjectType/update", "views/subjectType/update.php");
 
 any("/404", "views/errors/404.php");
 

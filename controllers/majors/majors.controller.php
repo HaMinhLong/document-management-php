@@ -123,7 +123,7 @@ class MajorsController
           if ($result > 0 && $result !== "nameExits") {
             $this->alert("Tạo mới bản ghi thành công", "majors");
           } elseif ($result === "nameExits") {
-            $newMajors->nameExits = "Bộ môn đã tồn tại!";
+            $newMajors->nameExits = "Ngành học đã tồn tại!";
             $_SESSION["majors"] = serialize($newMajors); //add session obj
             $this->pageRedirect("majors/insert");
           } else {
@@ -166,7 +166,7 @@ class MajorsController
           if ($result && $result !== "nameExits") {
             $this->alert("Cập nhật bản ghi thành công", "majors");
           } elseif ($result === "nameExits") {
-            $majors->nameExits = "Bộ môn đã tồn tại!";
+            $majors->nameExits = "Ngành học đã tồn tại!";
             $_SESSION["majors"] = serialize($majors); //add session obj
             $this->pageRedirect("majors/update");
           } else {

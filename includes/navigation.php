@@ -120,7 +120,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/final-php/subject-type" class="nav-link">
+                            <a href="/final-php/subjectType" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Loại môn học</p>
                             </a>
