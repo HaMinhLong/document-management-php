@@ -40,7 +40,8 @@ $section = isset($_SESSION["section"])
                                         <input hidden type="text" name='oldSectionName'
                                             value="<?php echo $section->sectionName; ?>">
                                         <div class="form-group">
-                                            <label for='sectionName'>Tên bộ môn</label>
+                                            <label for='sectionName'><span style='color: red'>*&nbsp;</span>Tên bộ
+                                                môn</label>
                                             <input type="text" name="sectionName" id='sectionName'
                                                 placeholder="Nhập tên bộ môn" class="<?php echo $section->nameMsg ||
                                                 $section->nameExits
@@ -56,14 +57,16 @@ $section = isset($_SESSION["section"])
                                                 maxlength='300'><?php echo $section->description; ?></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for='sec_update_department'>Khoa</label>
+                                            <label for='sec_update_department'><span
+                                                    style='color: red'>*&nbsp;</span>Khoa</label>
                                             <select name="departmentId" id="sec_update_department" class="<?php echo $section->parentMsg
                                               ? "form-control is-invalid"
                                               : "form-control"; ?>"></select>
                                             <span class="error-msg"><?php echo $section->parentMsg; ?></span>
                                         </div>
                                         <div class="form-group">
-                                            <label for='status'>Trạng thái</label>
+                                            <label for='status'><span style='color: red'>*&nbsp;</span>Trạng
+                                                thái</label>
                                             <select id='status' default='1' name='status' class="<?php echo $section->statusMsg
                                               ? "form-control is-invalid"
                                               : "form-control"; ?>">

@@ -41,7 +41,8 @@ $subjectType = isset($_SESSION["subjectType"])
                                         <input hidden type="text" name='oldSubjectTypeName'
                                             value="<?php echo $subjectType->subjectTypeName; ?>">
                                         <div class="form-group">
-                                            <label for='subjectTypeName'>Tên loại môn học</label>
+                                            <label for='subjectTypeName'><span style='color: red'>*&nbsp;</span>Tên loại
+                                                môn học</label>
                                             <input type="text" name="subjectTypeName" id='subjectTypeName'
                                                 placeholder="Nhập tên loại môn học" class="<?php echo $subjectType->nameMsg ||
                                                 $subjectType->nameExits
@@ -59,7 +60,8 @@ $subjectType = isset($_SESSION["subjectType"])
                                                 maxlength='300'><?php echo $subjectType->description; ?></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for='status'>Trạng thái</label>
+                                            <label for='status'><span style='color: red'>*&nbsp;</span>Trạng
+                                                thái</label>
                                             <select id='status' default='1' name='status' class="<?php echo $subjectType->statusMsg
                                               ? "form-control is-invalid"
                                               : "form-control"; ?>">

@@ -29,7 +29,7 @@ class UserModel
   {
     try {
       $this->open_db();
-      $record_per_page = 1;
+      $record_per_page = 10;
       $page = "";
       $output = "";
       if (isset($_GET["page"])) {
@@ -40,11 +40,11 @@ class UserModel
       $start_from = ($page - 1) * $record_per_page;
       if ($obj) {
         $query = $this->conn->prepare(
-          "SELECT * FROM user JOIN userGroup ON user.userGroupId = userGroup.id WHERE username LIKE '%$obj->username%' AND userGroupId LIKE '%$obj->userGroupId%' AND  user.status LIKE '%$obj->status%' LIMIT $start_from, $record_per_page"
+          "SELECT user.id,username,fullName,email,userGroupName,user.status FROM user JOIN userGroup ON user.userGroupId = userGroup.id WHERE username LIKE '%$obj->username%' AND userGroupId LIKE '%$obj->userGroupId%' AND  user.status LIKE '%$obj->status%' LIMIT $start_from, $record_per_page"
         );
       } else {
         $query = $this->conn->prepare(
-          "SELECT * FROM user JOIN userGroup ON user.userGroupId = userGroup.id LIMIT $start_from, $record_per_page"
+          "SELECT user.id,username,fullName,email,userGroupName,user.status FROM user JOIN userGroup ON user.userGroupId = userGroup.id LIMIT $start_from, $record_per_page"
         );
       }
       $query->execute();
@@ -158,9 +158,9 @@ class UserModel
       $this->open_db();
       // check usernameGroup exits
       $checkNameExits = $this->conn->prepare(
-        "SELECT id FROM user WHERE username=?"
+        "SELECT id FROM user WHERE username=? OR email=?"
       );
-      $checkNameExits->bind_param("s", $obj->username);
+      $checkNameExits->bind_param("ss", $obj->username, $obj->email);
       $checkNameExits->execute();
       $checkNameResult = $checkNameExits->get_result();
       $checkNameExits->close();
@@ -170,13 +170,18 @@ class UserModel
         return "nameExits";
       } else {
         $query = $this->conn->prepare(
-          "INSERT INTO user (id, username, description, status) VALUES (?, ?, ?, ?)"
+          "INSERT INTO user (id, username, password, fullName, email, mobile, majorsId, userGroupId, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
         $query->bind_param(
-          "isss",
+          "isssssiis",
           $obj->id,
           $obj->username,
-          $obj->description,
+          $obj->password,
+          $obj->fullName,
+          $obj->email,
+          $obj->mobile,
+          $obj->majorsId,
+          $obj->userGroupId,
           $obj->status
         );
         $query->execute();
@@ -197,14 +202,22 @@ class UserModel
     try {
       $this->open_db();
 
-      if ($obj->oldUsername === $obj->username) {
+      if (
+        $obj->oldUsername === $obj->username ||
+        $obj->oldEmail === $obj->email
+      ) {
         $query = $this->conn->prepare(
-          "UPDATE user SET username=?,description=?,status=? WHERE id=?"
+          "UPDATE user SET username=?,password=?,fullName=?,email=?,mobile=?,majorsId=?,userGroupId=?,status=? WHERE id=?"
         );
         $query->bind_param(
-          "sssi",
+          "sssssiisi",
           $obj->username,
-          $obj->description,
+          $obj->password,
+          $obj->fullName,
+          $obj->email,
+          $obj->mobile,
+          $obj->majorsId,
+          $obj->userGroupId,
           $obj->status,
           $obj->id
         );
@@ -215,9 +228,9 @@ class UserModel
         return true;
       } else {
         $checkNameExits = $this->conn->prepare(
-          "SELECT id FROM user WHERE username=?"
+          "SELECT id FROM user WHERE username=? OR email=?"
         );
-        $checkNameExits->bind_param("s", $obj->username);
+        $checkNameExits->bind_param("ss", $obj->username, $obj->email);
         $checkNameExits->execute();
         $checkNameResult = $checkNameExits->get_result();
         $checkNameExits->close();
@@ -227,12 +240,17 @@ class UserModel
           return "nameExits";
         } else {
           $query = $this->conn->prepare(
-            "UPDATE user SET username=?,description=?,status=? WHERE id=?"
+            "UPDATE user SET username=?,password=?,fullName=?,email=?,mobile=?,majorsId=?,userGroupId=?,status=? WHERE id=?"
           );
           $query->bind_param(
-            "sssi",
+            "sssssiisi",
             $obj->username,
-            $obj->description,
+            $obj->password,
+            $obj->fullName,
+            $obj->email,
+            $obj->mobile,
+            $obj->majorsId,
+            $obj->userGroupId,
             $obj->status,
             $obj->id
           );

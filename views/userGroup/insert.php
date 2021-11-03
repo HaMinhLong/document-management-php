@@ -38,7 +38,8 @@ $userGroup = isset($_SESSION["userGroup"])
                                     method='post'>
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for='userGroupName'>Tên nhóm tài khoản</label>
+                                            <label for='userGroupName'><span style='color: red'>*&nbsp;</span>Tên nhóm
+                                                tài khoản</label>
                                             <input type="text" name="userGroupName" id='userGroupName'
                                                 placeholder="Nhập tên nhóm tài khoản" class="<?php echo $userGroup->nameMsg ||
                                                 $userGroup->nameExits
@@ -49,7 +50,8 @@ $userGroup = isset($_SESSION["userGroup"])
                                             <span class="error-msg"><?php echo $userGroup->nameMsg; ?></span>
                                         </div>
                                         <div class="form-group">
-                                            <label for='description'>Mô tả</label>
+                                            <label for='description'><span style='color: red'>*&nbsp;</span>Mô
+                                                tả</label>
                                             <textarea name="description" id='description' class="<?php echo $userGroup->descriptionMsg
                                               ? "form-control is-invalid"
                                               : "form-control"; ?>" rows="3" placeholder="Mô tả"
@@ -57,7 +59,8 @@ $userGroup = isset($_SESSION["userGroup"])
                                             <span class="error-msg"><?php echo $userGroup->descriptionMsg; ?></span>
                                         </div>
                                         <div class="form-group">
-                                            <label for='status'>Trạng thái</label>
+                                            <label for='status'><span style='color: red'>*&nbsp;</span>Trạng
+                                                thái</label>
                                             <select id='status' default='1' name='status' class="<?php echo $userGroup->statusMsg
                                               ? "form-control is-invalid"
                                               : "form-control"; ?>">

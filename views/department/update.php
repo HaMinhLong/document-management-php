@@ -43,7 +43,8 @@ $department = isset($_SESSION["department"])
                                         <input hidden type="text" name='oldDepartmentCode'
                                             value="<?php echo $department->departmentCode; ?>">
                                         <div class="form-group">
-                                            <label for='departmentName'>Tên khoa</label>
+                                            <label for='departmentName'><span style='color: red'>*&nbsp;</span>Tên
+                                                khoa</label>
                                             <input type="text" name="departmentName" id='departmentName'
                                                 placeholder="Nhập tên khoa" class="<?php echo $department->nameMsg ||
                                                 $department->nameExits
@@ -54,7 +55,8 @@ $department = isset($_SESSION["department"])
                                             <span class="error-msg"><?php echo $department->nameMsg; ?></span>
                                         </div>
                                         <div class="form-group">
-                                            <label for='departmentCode'>Mã khoa</label>
+                                            <label for='departmentCode'><span style='color: red'>*&nbsp;</span>Mã
+                                                khoa</label>
                                             <input type="text" name="departmentCode" id='departmentCode'
                                                 placeholder="Nhập mã khoa" class="<?php echo $department->codeMsg ||
                                                 $department->nameExits
@@ -71,7 +73,8 @@ $department = isset($_SESSION["department"])
                                                 maxlength='300'><?php echo $department->description; ?></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for='status'>Trạng thái</label>
+                                            <label for='status'><span style='color: red'>*&nbsp;</span>Trạng
+                                                thái</label>
                                             <select id='status' default='1' name='status' class="<?php echo $department->statusMsg
                                               ? "form-control is-invalid"
                                               : "form-control"; ?>">

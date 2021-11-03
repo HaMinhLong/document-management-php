@@ -58,33 +58,57 @@ class UserController
       !filter_var($user->username, FILTER_VALIDATE_REGEXP, [
         "options" => [
           "regexp" =>
-            "/^[A-Za-zÀÁẢẠÃẦẤẨẬẪÂẮẰẶẴĂẲÈÉẸẺẼỂẾỀỆỄÊỊÌÍĨỈÒÓỎỌÕÔỐỒỔỘỖỜỚỠỢỞƠÙÚỤỦŨỨỪỬỮỰƯÝỲỶỸỴàáảạãầấẩậẫâắằặẵăẳèéẹẻẽểếềệễêịìíĩỉòóỏọõôốồổộỗờớỡợởơùúụủũứừửữựưýỳỷỹỵ ]{3,50}$$/i",
+            "/^[A-Za-zÀÁẢẠÃẦẤẨẬẪÂẮẰẶẴĂẲÈÉẸẺẼỂẾỀỆỄÊỊÌÍĨỈÒÓỎỌÕÔỐỒỔỘỖỜỚỠỢỞƠÙÚỤỦŨỨỪỬỮỰƯÝỲỶỸỴàáảạãầấẩậẫâắằặẵăẳèéẹẻẽểếềệễêịìíĩỉòóỏọõôốồổộỗờớỡợởơùúụủũứừửữựưýỳỷỹỵ ]{3,20}$$/i",
         ],
       ])
     ) {
       $user->nameMsg =
-        "Vui lòng nhập từ 3 đến 50 ký tự bao gồm chữ, số và bắt đầu bằng chữ cái";
+        "Vui lòng nhập từ 3 đến 20 ký tự bao gồm chữ, số và bắt đầu bằng chữ cái";
       $noError = false;
     } else {
       $user->nameMsg = "";
     }
-    // Validate description
-    if (!$user->description) {
-      $user->descriptionMsg = "Vui lòng điền thông tin";
-      $noError = false;
-    } elseif (
-      !filter_var($user->description, FILTER_VALIDATE_REGEXP, [
-        "options" => [
-          "regexp" =>
-            "/^[A-Za-zÀÁẢẠÃẦẤẨẬẪÂẮẰẶẴĂẲÈÉẸẺẼỂẾỀỆỄÊỊÌÍĨỈÒÓỎỌÕÔỐỒỔỘỖỜỚỠỢỞƠÙÚỤỦŨỨỪỬỮỰƯÝỲỶỸỴàáảạãầấẩậẫâắằặẵăẳèéẹẻẽểếềệễêịìíĩỉòóỏọõôốồổộỗờớỡợởơùúụủũứừửữựưýỳỷỹỵ ]{3,300}$$/i",
-        ],
-      ])
-    ) {
-      $user->descriptionMsg =
-        "Vui lòng nhập từ 3 đến 300 ký tự bao gồm chữ, số và bắt đầu bằng chữ cái";
+    // Validate password
+    if (!$user->password) {
+      $user->passwordMsg = "Vui lòng điền thông tin";
       $noError = false;
     } else {
-      $user->descriptionMsg = "";
+      $user->passwordMsg = "";
+    }
+    // Validate fullName
+    if (!$user->fullName) {
+      $user->fullNameMsg = "Vui lòng điền thông tin";
+      $noError = false;
+    } else {
+      $user->fullNameMsg = "";
+    }
+    // Validate email
+    if (!$user->email) {
+      $user->emailMsg = "Vui lòng điền thông tin";
+      $noError = false;
+    } else {
+      $user->emailMsg = "";
+    }
+    // Validate mobile
+    if (!$user->mobile) {
+      $user->mobileMsg = "Vui lòng điền thông tin";
+      $noError = false;
+    } else {
+      $user->mobileMsg = "";
+    }
+    // Validate majors
+    if (!$user->majorsId) {
+      $user->parentMsg = "Vui lòng chọn thông tin";
+      $noError = false;
+    } else {
+      $user->parentMsg = "";
+    }
+    // Validate userGroup
+    if (!$user->userGroupId) {
+      $user->parent2Msg = "Vui lòng chọn thông tin";
+      $noError = false;
+    } else {
+      $user->parent2Msg = "";
     }
     // Validate status
     if (!empty($user->status)) {
@@ -105,7 +129,12 @@ class UserController
         $newUser = new User();
         $newUser->id = null;
         $newUser->username = trim($_POST["username"]);
-        $newUser->description = trim($_POST["description"]);
+        $newUser->password = trim($_POST["password"]);
+        $newUser->fullName = trim($_POST["fullName"]);
+        $newUser->email = trim($_POST["email"]);
+        $newUser->mobile = trim($_POST["mobile"]);
+        $newUser->majorsId = trim($_POST["majorsId"]);
+        $newUser->userGroupId = trim($_POST["userGroupId"]);
         $newUser->status = trim($_POST["status"]);
         // call validation
         $checkNoError = $this->checkValidation($newUser);
@@ -145,8 +174,14 @@ class UserController
         $user = new User();
         $user->id = trim($_GET["id"]);
         $user->oldUsername = trim($_POST["oldUsername"]);
+        $user->oldEmail = trim($_POST["oldEmail"]);
         $user->username = trim($_POST["username"]);
-        $user->description = trim($_POST["description"]);
+        $user->password = trim($_POST["password"]);
+        $user->fullName = trim($_POST["fullName"]);
+        $user->email = trim($_POST["email"]);
+        $user->mobile = trim($_POST["mobile"]);
+        $user->majorsId = trim($_POST["majorsId"]);
+        $user->userGroupId = trim($_POST["userGroupId"]);
         $user->status = trim($_POST["status"]);
         // check validation
         $checkNoError = $this->checkValidation($user);
@@ -176,7 +211,12 @@ class UserController
         $user = new User();
         $user->id = $row["id"];
         $user->username = $row["username"];
-        $user->description = $row["description"];
+        $user->password = $row["password"];
+        $user->fullName = $row["fullName"];
+        $user->email = $row["email"];
+        $user->mobile = $row["mobile"];
+        $user->majorsId = $row["majorsId"];
+        $user->userGroupId = $row["userGroupId"];
         $user->status = $row["status"];
         $_SESSION["user"] = serialize($user);
         $this->pageRedirect("user/update");
@@ -213,8 +253,8 @@ class UserController
   {
     $filters = new User();
     $filters->username = trim($_GET["username"]);
-    $filters->status = trim($_GET["status"]);
     $filters->userGroupId = trim($_GET["userGroupId"]);
+    $filters->status = trim($_GET["status"]);
     if (
       isset($_GET["username"]) ||
       isset($_GET["status"]) ||

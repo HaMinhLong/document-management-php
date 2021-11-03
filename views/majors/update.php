@@ -42,7 +42,8 @@ $majors = isset($_SESSION["majors"])
                                         <input hidden type="text" name='oldMajorsCode'
                                             value="<?php echo $majors->majorsCode; ?>">
                                         <div class="form-group">
-                                            <label for='majorsName'>Tên ngành học</label>
+                                            <label for='majorsName'><span style='color: red'>*&nbsp;</span>Tên ngành
+                                                học</label>
                                             <input type="text" name="majorsName" id='majorsName'
                                                 placeholder="Nhập tên ngành học" class="<?php echo $majors->nameMsg ||
                                                 $majors->nameExits
@@ -52,7 +53,8 @@ $majors = isset($_SESSION["majors"])
                                             <span class="error-msg"><?php echo $majors->nameMsg; ?></span>
                                         </div>
                                         <div class="form-group">
-                                            <label for='majorsCode'>Mã ngành học</label>
+                                            <label for='majorsCode'><span style='color: red'>*&nbsp;</span>Mã ngành
+                                                học</label>
                                             <input type="text" name="majorsCode" id='majorsCode'
                                                 placeholder="Nhập mã ngành học" class="<?php echo $majors->codeMsg ||
                                                 $majors->nameExits
@@ -68,14 +70,16 @@ $majors = isset($_SESSION["majors"])
                                                 maxlength='300'><?php echo $majors->description; ?></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for='mj_update_section'>Bộ môn</label>
+                                            <label for='mj_update_section'><span style='color: red'>*&nbsp;</span>Bộ
+                                                môn</label>
                                             <select name="sectionId" id="mj_update_section" class="<?php echo $majors->parentMsg
                                               ? "form-control is-invalid"
                                               : "form-control"; ?>"></select>
                                             <span class="error-msg"><?php echo $majors->parentMsg; ?></span>
                                         </div>
                                         <div class="form-group">
-                                            <label for='status'>Trạng thái</label>
+                                            <label for='status'><span style='color: red'>*&nbsp;</span>Trạng
+                                                thái</label>
                                             <select id='status' default='1' name='status' class="<?php echo $majors->statusMsg
                                               ? "form-control is-invalid"
                                               : "form-control"; ?>">

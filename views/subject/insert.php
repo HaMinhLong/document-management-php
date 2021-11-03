@@ -37,7 +37,8 @@ $subject = isset($_SESSION["subject"])
                                 <form class='form__container col-6' action='/final-php/subject?act=add' method='post'>
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for='subjectName'>Tên môn học</label>
+                                            <label for='subjectName'><span style='color: red'>*&nbsp;</span>Tên môn
+                                                học</label>
                                             <input type="text" name="subjectName" id='subjectName'
                                                 placeholder="Nhập tên môn học" class="<?php echo $subject->nameMsg ||
                                                 $subject->nameExits
@@ -47,7 +48,8 @@ $subject = isset($_SESSION["subject"])
                                             <span class="error-msg"><?php echo $subject->nameMsg; ?></span>
                                         </div>
                                         <div class="form-group">
-                                            <label for='subjectCode'>Mã môn học</label>
+                                            <label for='subjectCode'><span style='color: red'>*&nbsp;</span>Mã môn
+                                                học</label>
                                             <input type="text" name="subjectCode" id='subjectCode'
                                                 placeholder="Nhập tên môn học" class="<?php echo $subject->codeMsg ||
                                                 $subject->nameExits
@@ -63,14 +65,16 @@ $subject = isset($_SESSION["subject"])
                                                 maxlength='300'><?php echo $subject->description; ?></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for='sj_insert_subjectType'>Loại môn học</label>
+                                            <label for='sj_insert_subjectType'><span
+                                                    style='color: red'>*&nbsp;</span>Loại môn học</label>
                                             <select name="subjectTypeId" id="sj_insert_subjectType" class="<?php echo $subject->parentMsg
                                               ? "form-control is-invalid"
                                               : "form-control"; ?>"></select>
                                             <span class="error-msg"><?php echo $subject->parentMsg; ?></span>
                                         </div>
                                         <div class="form-group">
-                                            <label for='status'>Trạng thái</label>
+                                            <label for='status'><span style='color: red'>*&nbsp;</span>Trạng
+                                                thái</label>
                                             <select id='status' default='1' name='status' class="<?php echo $subject->statusMsg
                                               ? "form-control is-invalid"
                                               : "form-control"; ?>">

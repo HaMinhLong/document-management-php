@@ -29,7 +29,7 @@ class DepartmentModel
   {
     try {
       $this->open_db();
-      $record_per_page = 1;
+      $record_per_page = 10;
       $page = "";
       $output = "";
       if (isset($_GET["page"])) {
