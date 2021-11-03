@@ -1,11 +1,11 @@
 <?php
 include "includes/header.php";
 include "includes/navigation.php";
-require "models/majors/majors.php";
+require "models/subject/subject.php";
 session_start();
-$majors = isset($_SESSION["majors"])
-  ? unserialize($_SESSION["majors"])
-  : new Majors();
+$subject = isset($_SESSION["subject"])
+  ? unserialize($_SESSION["subject"])
+  : new Subject();
 ?>
 
 <div class="content-wrapper">
@@ -13,11 +13,11 @@ $majors = isset($_SESSION["majors"])
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Sửa ngành học</h1>
+                    <h1 class="m-0">Sửa môn học</h1>
                     <ol class="breadcrumb float-sm-left">
                         <li class="breadcrumb-item"><a href="/final-php">Home</a></li>
-                        <li class="breadcrumb-item"><a href="/final-php/majors">Ngành học</a></li>
-                        <li class="breadcrumb-item active">Sửa ngành học</li>
+                        <li class="breadcrumb-item"><a href="/final-php/subject">Môn học</a></li>
+                        <li class="breadcrumb-item active">Sửa môn học</li>
                     </ol>
                 </div>
             </div>
@@ -30,63 +30,63 @@ $majors = isset($_SESSION["majors"])
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Sửa ngành học</h3>
+                            <h3 class="card-title">Sửa môn học</h3>
                         </div>
                         <div class="container-fluid">
                             <div class="row">
                                 <form class='form__container col-6'
-                                    action='/final-php/majors?act=update&id=<?php echo $majors->id; ?>' method='post'>
+                                    action='/final-php/subject?act=update&id=<?php echo $subject->id; ?>' method='post'>
                                     <div class="card-body">
-                                        <input hidden type="text" name='oldMajorsName'
-                                            value="<?php echo $majors->majorsName; ?>">
-                                        <input hidden type="text" name='oldMajorsCode'
-                                            value="<?php echo $majors->majorsCode; ?>">
+                                        <input hidden type="text" name='oldSubjectName'
+                                            value="<?php echo $subject->subjectName; ?>">
+                                        <input hidden type="text" name='oldSubjectCode'
+                                            value="<?php echo $subject->subjectCode; ?>">
                                         <div class="form-group">
-                                            <label for='majorsName'>Tên ngành học</label>
-                                            <input type="text" name="majorsName" id='majorsName'
-                                                placeholder="Nhập tên ngành học" class="<?php echo $majors->nameMsg ||
-                                                $majors->nameExits
+                                            <label for='subjectName'>Tên môn học</label>
+                                            <input type="text" name="subjectName" id='subjectName'
+                                                placeholder="Nhập tên môn học" class="<?php echo $subject->nameMsg ||
+                                                $subject->nameExits
                                                   ? "form-control is-invalid"
-                                                  : "form-control"; ?>" value="<?php echo $majors->majorsName; ?>">
-                                            <span class="error-msg"><?php echo $majors->nameExits; ?></span>
-                                            <span class="error-msg"><?php echo $majors->nameMsg; ?></span>
+                                                  : "form-control"; ?>" value="<?php echo $subject->subjectName; ?>">
+                                            <span class="error-msg"><?php echo $subject->nameExits; ?></span>
+                                            <span class="error-msg"><?php echo $subject->nameMsg; ?></span>
                                         </div>
                                         <div class="form-group">
-                                            <label for='majorsCode'>Mã ngành học</label>
-                                            <input type="text" name="majorsCode" id='majorsCode'
-                                                placeholder="Nhập mã ngành học" class="<?php echo $majors->codeMsg ||
-                                                $majors->nameExits
+                                            <label for='subjectCode'>Mã môn học</label>
+                                            <input type="text" name="subjectCode" id='subjectCode'
+                                                placeholder="Nhập mã môn học" class="<?php echo $subject->codeMsg ||
+                                                $subject->nameExits
                                                   ? "form-control is-invalid"
-                                                  : "form-control"; ?>" value="<?php echo $majors->majorsCode; ?>">
-                                            <span class="error-msg"><?php echo $majors->nameExits; ?></span>
-                                            <span class="error-msg"><?php echo $majors->codeMsg; ?></span>
+                                                  : "form-control"; ?>" value="<?php echo $subject->subjectCode; ?>">
+                                            <span class="error-msg"><?php echo $subject->nameExits; ?></span>
+                                            <span class="error-msg"><?php echo $subject->codeMsg; ?></span>
                                         </div>
                                         <div class="form-group">
                                             <label for='description'>Mô tả</label>
                                             <textarea name="description" id='description' class=" form-control" rows="3"
                                                 placeholder="Mô tả"
-                                                maxlength='300'><?php echo $majors->description; ?></textarea>
+                                                maxlength='300'><?php echo $subject->description; ?></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for='mj_update_section'>Bộ môn</label>
-                                            <select name="sectionId" id="mj_update_section" class="<?php echo $majors->parentMsg
+                                            <label for='sj_update_subjectType'>Loại môn học</label>
+                                            <select name="subjectTypeId" id="sj_update_subjectType" class="<?php echo $subject->parentMsg
                                               ? "form-control is-invalid"
                                               : "form-control"; ?>"></select>
-                                            <span class="error-msg"><?php echo $majors->parentMsg; ?></span>
+                                            <span class="error-msg"><?php echo $subject->parentMsg; ?></span>
                                         </div>
                                         <div class="form-group">
                                             <label for='status'>Trạng thái</label>
-                                            <select id='status' default='1' name='status' class="<?php echo $majors->statusMsg
+                                            <select id='status' default='1' name='status' class="<?php echo $subject->statusMsg
                                               ? "form-control is-invalid"
                                               : "form-control"; ?>">
-                                                <?php echo $majors->status ===
+                                                <?php echo $subject->status ===
                                                 "0"
                                                   ? "<option value='1'>Kích hoạt</option>
                                             <option value='0' selected>Ẩn</option>"
                                                   : "<option value='1' selected>Kích hoạt</option>
                                             <option value='0'>Ẩn</option>"; ?>
                                             </select>
-                                            <span class="error-msg"><?php echo $majors->statusMsg; ?></span>
+                                            <span class="error-msg"><?php echo $subject->statusMsg; ?></span>
                                         </div>
                                         <button type="submit" name="update-btn" class="btn btn-primary"><i
                                                 style='font-size: 14px' class="fas fa-save"></i>&nbsp;&nbsp;Lưu
@@ -108,15 +108,15 @@ include "includes/scripts.php";
 <script>
 $(document).ready(function() {
 
-    load_section_select();
+    load_subjectType_select();
 
-    function load_section_select() {
+    function load_subjectType_select() {
         $.ajax({
-            url: "/final-php/section?act=select",
+            url: "/final-php/subjectType?act=select",
             method: "GET",
             data: {},
             success: data => {
-                $('#mj_update_section').html(data);
+                $('#sj_update_subjectType').html(data);
             }
         })
     }

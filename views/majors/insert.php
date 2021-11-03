@@ -63,8 +63,8 @@ $majors = isset($_SESSION["majors"])
                                                 maxlength='300'><?php echo $majors->description; ?></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for='sec_insert_section'>Bộ môn</label>
-                                            <select name="sectionId" id="sec_insert_section" class="<?php echo $majors->parentMsg
+                                            <label for='mj_insert_section'>Bộ môn</label>
+                                            <select name="sectionId" id="mj_insert_section" class="<?php echo $majors->parentMsg
                                               ? "form-control is-invalid"
                                               : "form-control"; ?>"></select>
                                             <span class="error-msg"><?php echo $majors->parentMsg; ?></span>
@@ -111,7 +111,7 @@ $(document).ready(function() {
             method: "GET",
             data: {},
             success: data => {
-                $('#sec_insert_section').html(data);
+                $('#mj_insert_section').html(data);
             }
         })
     }
